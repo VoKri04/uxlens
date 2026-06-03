@@ -1,0 +1,1 @@
+{"version":3,"file":"get_batches.d.ts","sourceRoot":"","sources":["../src/api/get_batches.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAqC,MAAM,OAAO,CAAC;AAGzE,OAAO,EAAE,aAAa,EAAE,YAAY,EAAE,MAAM,eAAe,CAAC;AAE5D,UAAU,cAAc;IACtB,WAAW,CAAC,EAAE,MAAM,CAAC;CACtB;AAsBD,wBAAsB,WAAW,CAC/B,MAAM,EAAE,aAAa,EACrB,IAAI,EAAE,cAAc,GACnB,OAAO,CAAC,aAAa,GAAG,YAAY,CAAC,CAIvC"}

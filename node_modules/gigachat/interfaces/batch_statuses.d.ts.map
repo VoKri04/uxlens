@@ -1,0 +1,1 @@
+{"version":3,"file":"batch_statuses.d.ts","sourceRoot":"","sources":["../src/interfaces/batch_statuses.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,WAAW,EAAE,MAAM,gBAAgB,CAAC;AAE7C,UAAU,aAAa;IACrB,6BAA6B;IAC7B,IAAI,EAAE,WAAW,EAAE,CAAC;CACrB;AAED,YAAY,EAAE,aAAa,EAAE,CAAC"}

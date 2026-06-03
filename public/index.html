@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UXLens — AI-анализ UX/UI сайтов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<nav class="nav" id="navbar">
+  <div class="nav__inner">
+    <a href="/" class="nav__logo">
+      <span class="nav__logo-dot"></span>
+      UXLens
+    </a>
+    <div class="nav__links">
+      <a href="#how">Как работает</a>
+      <a href="#features">Возможности</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero__bg">
+    <div class="hero__glow hero__glow--1"></div>
+    <div class="hero__glow hero__glow--2"></div>
+    <div class="hero__grid"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero__content">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        Powered by GigaChat
+      </div>
+
+      <h1 class="hero__title">
+        Анализ UX/UI<br />
+        <span class="hero__title-accent">за 30 секунд</span>
+      </h1>
+
+      <p class="hero__subtitle">
+        Вставьте ссылку на любой сайт — искусственный интеллект проведёт полный аудит
+        дизайна и выдаст конкретные рекомендации по улучшению
+      </p>
+
+      <form class="hero__form" id="analyzeForm" novalidate>
+        <div class="hero__input-wrap">
+          <svg class="hero__input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          <input
+            type="url"
+            id="urlInput"
+            class="hero__input"
+            placeholder="https://example.com"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="submit" class="hero__btn" id="analyzeBtn">
+            <span class="hero__btn-text">Анализировать</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+        <p class="hero__hint" id="formHint">Поддерживаются любые публично доступные сайты</p>
+      </form>
+    </div>
+  </div>
+
+  <div class="hero__stats container">
+    <div class="stat">
+      <div class="stat__num">5+</div>
+      <div class="stat__label">Критериев оценки</div>
+    </div>
+    <div class="stat__divider"></div>
+    <div class="stat">
+      <div class="stat__num">~30 с</div>
+      <div class="stat__label">Время анализа</div>
+    </div>
+    <div class="stat__divider"></div>
+    <div class="stat">
+      <div class="stat__num">AI</div>
+      <div class="stat__label">GigaChat Pro</div>
+    </div>
+  </div>
+</section>
+
+<section class="loader" id="loaderSection" hidden>
+  <div class="container">
+    <div class="loader__card">
+      <div class="loader__orbit">
+        <div class="loader__ring loader__ring--1"></div>
+        <div class="loader__ring loader__ring--2"></div>
+        <div class="loader__ring loader__ring--3"></div>
+        <div class="loader__center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+      </div>
+      <h2 class="loader__title">Анализируем сайт...</h2>
+      <p class="loader__step" id="loaderStep">Подключение к сайту</p>
+      <div class="loader__progress">
+        <div class="loader__progress-bar" id="loaderBar"></div>
+      </div>
+      <p class="loader__url" id="loaderUrl"></p>
+    </div>
+  </div>
+</section>
+
+<section class="results" id="resultsSection" hidden>
+  <div class="container">
+
+    <div class="results__header">
+      <div class="results__header-left">
+        <p class="results__label">Результаты анализа</p>
+        <h2 class="results__site-url" id="resultUrl"></h2>
+      </div>
+      <button class="btn-ghost" id="newAnalysisBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Новый анализ
+      </button>
+    </div>
+
+    <div class="results__grid">
+
+      <aside class="results__sidebar">
+        <div class="score-card">
+          <svg class="score-card__svg" viewBox="0 0 120 120" id="scoreCircle">
+            <circle class="score-card__track" cx="60" cy="60" r="50"/>
+            <circle class="score-card__fill" cx="60" cy="60" r="50" id="scoreArc"/>
+          </svg>
+          <div class="score-card__inner">
+            <div class="score-card__num" id="overallScore">—</div>
+            <div class="score-card__sub">из 100</div>
+          </div>
+          <p class="score-card__label">Общая оценка</p>
+        </div>
+
+        <div class="metrics" id="metricsBlock">
+        </div>
+
+        <div class="positives" id="positivesBlock" hidden>
+          <h3 class="positives__title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <path d="M22 4 12 14.01l-3-3"/>
+            </svg>
+            Что сделано хорошо
+          </h3>
+          <ul class="positives__list" id="positivesList"></ul>
+        </div>
+      </aside>
+
+      <div class="results__main">
+        <div class="summary-card" id="summaryCard" hidden>
+          <p class="summary-card__text" id="summaryText"></p>
+        </div>
+
+        <div class="issues">
+          <div class="issues__header">
+            <h3 class="issues__title">Рекомендации по улучшению</h3>
+            <div class="issues__filters" id="issueFilters">
+              <button class="filter-btn filter-btn--active" data-filter="all">Все</button>
+              <button class="filter-btn" data-filter="critical">Критично</button>
+              <button class="filter-btn" data-filter="important">Важно</button>
+              <button class="filter-btn" data-filter="improvement">Улучшения</button>
+            </div>
+          </div>
+          <div class="issues__list" id="issuesList">
+          </div>
+        </div>
+
+        <div class="chat">
+          <div class="chat__header">
+            <div class="chat__header-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h3 class="chat__title">AI-ассистент</h3>
+              <p class="chat__subtitle">Задайте вопрос по результатам анализа</p>
+            </div>
+          </div>
+          <div class="chat__messages" id="chatMessages">
+            <div class="chat__message chat__message--ai">
+              <div class="chat__bubble">
+                Привет! Я проанализировал сайт и готов ответить на ваши вопросы. Спросите о любой из найденных проблем или попросите объяснить рекомендацию подробнее.
+              </div>
+            </div>
+          </div>
+          <div class="chat__input-wrap">
+            <input
+              type="text"
+              class="chat__input"
+              id="chatInput"
+              placeholder="Например: как исправить проблему с контрастом?"
+            />
+            <button class="chat__send" id="chatSendBtn" aria-label="Отправить">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Как это работает</h2>
+      <p class="section-sub">Четыре шага от ссылки до готового отчёта</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+        </div>
+        <h3 class="step__title">Введите URL</h3>
+        <p class="step__text">Вставьте ссылку на любой публично доступный сайт</p>
+      </div>
+      <div class="step__arrow">→</div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          </svg>
+        </div>
+        <h3 class="step__title">Сбор данных</h3>
+        <p class="step__text">Система загружает страницу и анализирует структуру, стили и метаданные</p>
+      </div>
+      <div class="step__arrow">→</div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 2a10 10 0 1 0 10 10"/>
+            <path d="M12 6v6l4 2"/>
+            <path d="M22 2 12 12"/>
+          </svg>
+        </div>
+        <h3 class="step__title">AI-анализ</h3>
+        <p class="step__text">Claude оценивает дизайн по 5 критериям и формирует список проблем</p>
+      </div>
+      <div class="step__arrow">→</div>
+      <div class="step">
+        <div class="step__num">04</div>
+        <div class="step__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+          </svg>
+        </div>
+        <h3 class="step__title">Готовый отчёт</h3>
+        <p class="step__text">Получите детальный отчёт с приоритетами и конкретными рекомендациями</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Что анализируется</h2>
+    </div>
+    <div class="features__grid">
+      <div class="feature-card">
+        <div class="feature-card__icon" style="--c: #7C7CEB">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4l3 3"/>
+          </svg>
+        </div>
+        <h3>Визуальный дизайн</h3>
+        <p>Оценка цветовой схемы, контрастности, визуальной иерархии и общего стиля</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon" style="--c: #1D9E75">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Доступность</h3>
+        <p>Проверка alt-атрибутов, лейблов форм, структуры заголовков и стандартов WCAG</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon" style="--c: #E8642A">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <path d="M9 22V12h6v10"/>
+          </svg>
+        </div>
+        <h3>Навигация</h3>
+        <p>Анализ структуры меню, логики ссылок и пользовательских сценариев</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon" style="--c: #D4537E">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 7V4h16v3"/>
+            <path d="M9 20h6"/>
+            <path d="M12 4v16"/>
+          </svg>
+        </div>
+        <h3>Типографика</h3>
+        <p>Оценка шрифтов, размеров, межстрочных интервалов и читаемости текста</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon" style="--c: #3B82F6">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+            <path d="M12 18h.01"/>
+          </svg>
+        </div>
+        <h3>Мобильность</h3>
+        <p>Проверка адаптивности и корректности отображения на мобильных устройствах</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card__icon" style="--c: #F59E0B">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3>AI-чат</h3>
+        <p>Задавайте вопросы по результатам — ассистент объяснит каждую рекомендацию</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__logo">
+        <span class="nav__logo-dot"></span>
+        UXLens
+      </div>
+      <p class="footer__copy">Дипломная работа · 2026</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

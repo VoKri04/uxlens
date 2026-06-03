@@ -1,0 +1,1 @@
+{"version":3,"file":"choices.d.ts","sourceRoot":"","sources":["../src/interfaces/choices.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,MAAM,iBAAiB,CAAC;AAC/C,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAEpC,UAAU,OAAO;IACf,gCAAgC;IAChC,OAAO,EAAE,OAAO,CAAC;IAEjB,gDAAgD;IAChD,KAAK,EAAE,MAAM,CAAC;IAEd,kCAAkC;IAClC,aAAa,CAAC,EAAE,YAAY,CAAC;CAC9B;AAED,YAAY,EAAE,OAAO,EAAE,CAAC"}
